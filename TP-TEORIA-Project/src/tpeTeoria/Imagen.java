@@ -27,7 +27,8 @@ public class Imagen implements Comparable<Imagen>{
 	private Double fc;
 	private Double desvio;
 	private Double media;
-	
+
+	private Double [] distr;
 	
 	public Imagen() {
 	}
@@ -39,6 +40,7 @@ public class Imagen implements Comparable<Imagen>{
 		this.media = 0.0;
 		this.desvio = 0.0;
 		this.nombre=nombre;
+		
 	}
 
 	public BufferedImage getImg() {
@@ -48,6 +50,15 @@ public class Imagen implements Comparable<Imagen>{
 	public void setImg(BufferedImage img) {
 		this.img = img;
 	}
+	
+	public Double[] getDistr() {
+		return distr;
+	}
+
+	public void setDistr(Double[] distr) {
+		this.distr = distr;
+	}
+
 
 	public double getFc() {
 		return fc;
@@ -97,7 +108,16 @@ public class Imagen implements Comparable<Imagen>{
 		Color c= new Color(img.getRGB(x, y),true);
 		return c.getBlue();
 	}
-	//jhjkhjkhu
+	
+	public String getStringDistr()
+	{
+		String out="";
+		for (int i=0;i<distr.length;i++)
+		{
+			out=out+i+": "+distr[i].toString()+System.getProperty("line.separator");
+		}
+		return out;
+	}
 	
 	public void generarHistograma()
 	{
@@ -110,7 +130,7 @@ public class Imagen implements Comparable<Imagen>{
 				indice++;
 			}
 		}
-		Histograma histo = new Histograma("Histograma "+this.nombre,v); //podemos apsar el nombre de la img
+		Histograma histo = new Histograma("Histograma "+this.nombre,v);
 	}
 	
 	

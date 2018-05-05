@@ -23,7 +23,7 @@ public class Histograma extends ApplicationFrame {
 	public Histograma(String title, double v []) {
 		super(title);
 		nombre=title;
-		JPanel chartPanel = crearPanel(v);
+		JPanel chartPanel = crearPanel(v,this.nombre);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 475));
 		setContentPane(chartPanel);
 	}
@@ -42,7 +42,7 @@ public class Histograma extends ApplicationFrame {
 		return dataset;
 	}
 
-	private static JFreeChart crearChart(IntervalXYDataset dataset) {
+	private static JFreeChart crearChart(IntervalXYDataset dataset, String nombre) {
 		JFreeChart chart = ChartFactory.createHistogram("Histograma", null, null, dataset, PlotOrientation.VERTICAL,
 				true, true, false);
 		XYPlot plot = (XYPlot) chart.getPlot();
@@ -50,15 +50,17 @@ public class Histograma extends ApplicationFrame {
 		renderer.setDrawBarOutline(false);
 		try {
 			
-			ChartUtilities.saveChartAsJPEG(new File("imagenes\\histograma1.jpg"), chart, 500, 475);//cambiar la direcc
+			ChartUtilities.saveChartAsJPEG(new File("imagenes"+"\\"+nombre+ ".jpg"), chart, 500, 475);//cambiar la direcc
+			System.out.println("paula comprate una compu");
+
 		} catch (IOException e) {
 			System.out.println("Error al abrir el archivo");
 		}
 		return chart;
 	}
 
-	public static JPanel crearPanel(double v []) {
-		JFreeChart chart = crearChart(crearDataset(v));
+	public static JPanel crearPanel(double v [], String nombre) {
+		JFreeChart chart = crearChart(crearDataset(v),nombre);
 		return new ChartPanel(chart);
 	}
 
