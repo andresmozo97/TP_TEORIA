@@ -30,7 +30,7 @@ public class Ejercicio1 {
 		imgs.add(e.abrirImagen("imagenes\\Will_7.bmp"));
 		
 		List<Imagen> l= e.OrdenarImagenes(original,imgs);
-		e.GenerarHistogramas(l);
+		//e.GenerarHistogramas(l);
 		e.GenerarTxtDistribuciones(l.get(0));
 		e.GenerarTxtDistribuciones(l.get(l.size()-1));
 		e.GenerarTxtDistribuciones(original);

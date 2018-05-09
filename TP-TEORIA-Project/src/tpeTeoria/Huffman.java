@@ -18,8 +18,10 @@ public class Huffman {
 		Vector<Nodo> noditos= new Vector<Nodo>();
 		for (int i=0;i<probas.length;i++)
 		{
-			Nodo nuevo= new Nodo(probas[i],0,null,null);
-			noditos.add(nuevo);
+			if (probas[i]!=0) {
+				Nodo nuevo= new Nodo(probas[i],0,null,null);
+				noditos.add(nuevo);
+			}
 		}
 		Nodo raiz = this.CrearArbol(noditos);
 		for (int i=0;i<noditos.size();i++)
