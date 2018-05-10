@@ -43,6 +43,7 @@ public class Imagen implements Comparable<Imagen>{
 		
 	}
 
+	
 	public BufferedImage getImg() {
 		return img;
 	}
@@ -108,7 +109,13 @@ public class Imagen implements Comparable<Imagen>{
 		Color c= new Color(img.getRGB(x, y),true);
 		return c.getBlue();
 	}
+	public int getAncho() {
+		return img.getWidth();
+	}
 	
+	public int getAlto() { 
+		return img.getHeight();
+	}
 	public String getStringDistr()
 	{
 		String out="";
@@ -136,4 +143,3 @@ public class Imagen implements Comparable<Imagen>{
 	
 	
 }
-

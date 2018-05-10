@@ -4,18 +4,19 @@ public class Nodo implements Comparable<Nodo> {
 
 	private Double prob;
 	private int cantRamas;
-	private Nodo hijoArio;
-	private Nodo hijo;
+	private Nodo hijo1;
+	private Nodo hijo2;
+	private Integer valorRGB;
 
 	private String codif;
 	
-	public Nodo(Double prob, int cantRamas, Nodo hijoArio, Nodo hijo) {
+	public Nodo(Double prob, int cantRamas, Nodo hijo1, Nodo hijo2, Integer valorRGB) {
 		super();
 		this.prob = prob;
 		this.cantRamas = cantRamas;
-		this.hijoArio = hijoArio;
-		System.out.println("HIJO LLAMA");
-		this.hijo = hijo;
+		this.hijo1 = hijo1;
+		this.hijo2 = hijo2;
+		this.valorRGB = valorRGB;
 	}
 	
 	public Double getProb() {
@@ -31,16 +32,16 @@ public class Nodo implements Comparable<Nodo> {
 		this.cantRamas = cantRamas;
 	}
 	public Nodo getHijoArio() {
-		return hijoArio;
+		return hijo1;
 	}
 	public void setHijoArio(Nodo hijoArio) {
-		this.hijoArio = hijoArio;
+		this.hijo1 = hijoArio;
 	}
 	public Nodo getHijo() {
-		return hijo;
+		return hijo2;
 	}
 	public void setHijo(Nodo hijo) {
-		this.hijo = hijo;
+		this.hijo2 = hijo;
 	}
 	public String getCodif() {
 		return codif;
@@ -53,13 +54,21 @@ public class Nodo implements Comparable<Nodo> {
 	public void incrementarCantRamas()
 	{
 		this.cantRamas++;
-		if (hijo!=null && hijoArio!=null)
+		if (hijo2!=null && hijo1!=null)
 		{
-			hijo.incrementarCantRamas();
-			hijoArio.incrementarCantRamas();
+			hijo2.incrementarCantRamas();
+			hijo1.incrementarCantRamas();
 		}
 	}
 	
+	public Integer getValorRGB() {
+		return valorRGB;
+	}
+
+	public void setValorRGB(Integer valorRGB) {
+		this.valorRGB = valorRGB;
+	}
+
 	@Override
 	public int compareTo(Nodo n) {
 		return (this.prob).compareTo(n.getProb());
