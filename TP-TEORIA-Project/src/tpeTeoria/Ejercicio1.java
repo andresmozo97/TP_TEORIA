@@ -30,7 +30,7 @@ public class Ejercicio1 {
 		imgs.add(e.abrirImagen("imagenes\\Will_7.bmp"));
 		
 		List<Imagen> l= e.OrdenarImagenes(original,imgs);
-		//e.GenerarHistogramas(l);
+		e.GenerarHistogramas(l);
 		e.GenerarTxtDistribuciones(l.get(0));
 		e.GenerarTxtDistribuciones(l.get(l.size()-1));
 		e.GenerarTxtDistribuciones(original);
@@ -70,7 +70,7 @@ public class Ejercicio1 {
 		for (int i=0;i<l.size();i++)
 		{
 			l.get(i).generarHistograma();
-			System.out.println(l.get(i).getNombre() + "  fc: " + l.get(i).getFc() + "  " + "desvio: " +l.get(i).getDesvio() + "  media: " + l.get(i).getMedia());
+			//System.out.println(l.get(i).getNombre() + "  fc: " + l.get(i).getFc() + "  " + "desvio: " +l.get(i).getDesvio() + "  media: " + l.get(i).getMedia());
 		
 		}
 	}
@@ -81,7 +81,7 @@ public class Ejercicio1 {
 			FileWriter escribir = new FileWriter(archivo, true);			
 			String s="La distribucion de la foto "+img.getNombre()+" es: ";
 			s =s+ System.getProperty("line.separator") + img.getStringDistr();
-			System.out.println(s); //BORRAR DSP
+			//System.out.println(s); //BORRAR DSP
 			escribir.write(s);
 			escribir.close();
 		}

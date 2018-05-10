@@ -1,8 +1,8 @@
 package tpeTeoria;
 
-import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 
 public class Huffman {
@@ -16,71 +16,48 @@ public class Huffman {
 	public void setHash(Imagen img)
 	{
 		Double [] probas = img.getDistr();
-		Vector<Nodo> noditos= new Vector<Nodo>();
+		Vector<Nodo> nodos= new Vector<Nodo>();
 		for (int i=0;i<probas.length;i++)
 		{
 			if (probas[i]!=0) {
 				Nodo nuevo= new Nodo(probas[i],0,null,null,i);
-				noditos.add(nuevo);
+				nodos.add(nuevo);
 			}
 		}
-		Nodo raiz = this.CrearArbol(noditos);
-		for (int i=0;i<noditos.size();i++)
-		{
-			System.out.println("la cantidad de ramas en " + i + " es " + noditos.elementAt(i).getCantRamas());
-		}
+		Nodo raiz = this.CrearArbol(nodos).elementAt(0);
 		this.SetCodification(raiz,"");
-		
-		System.out.println("tiwanaku2");
-		for (int i=0;i<hash.size();i++)
-		{
-			System.out.println("la codif de el numero " + i + " es " + hash.get(i));
-		}
 	}
 	
 	public void SetCodification(Nodo raiz,String codif)
 	{
 		if (raiz!=null)
 		{
-			if (raiz.getHijo()!=null)
-			{
-				SetCodification(raiz.getHijo(),codif +"0");
-			}
-			if (raiz.getHijoArio()!=null)
-			{
-				SetCodification(raiz.getHijoArio(),codif+"1");
-			}
-			else
-			{
-				raiz.setCodif(codif);
+			SetCodification(raiz.getHijo1(),codif +"0");
+			raiz.setCodif(codif);
+			if (raiz.getValorRGB()>=0) {
 				hash.put(raiz.getValorRGB(),codif);
 			}
+			SetCodification(raiz.getHijo2(),codif+"1");
 		}
 	}
 	
-	public Nodo CrearArbol(Vector<Nodo> noditos1)
+	public Vector<Nodo> CrearArbol(Vector<Nodo> nodosIniciales)
 	{
-		Vector<Nodo> noditos = new Vector<>(noditos1);
-		Collections.sort(noditos);
-		
-		if (noditos.size()>1)
+		Vector<Nodo> nodosAux = new Vector<>(nodosIniciales);
+		Collections.sort(nodosAux);
+		if (nodosAux.size()>1)
 		{
-			Nodo nodito1= noditos.elementAt(noditos.size()-1);
-			Nodo nodito2= noditos.elementAt(noditos.size()-2);
-			int maximoRama = Math.max(nodito1.getCantRamas(), nodito2.getCantRamas());
-			Nodo nuevo= new Nodo(nodito1.getProb()+nodito2.getProb(),maximoRama,nodito1,nodito2,-1);
+			Nodo nodo1= nodosAux.elementAt(nodosAux.size()-1);
+			Nodo nodo2= nodosAux.elementAt(nodosAux.size()-2);
+			Nodo nuevo= new Nodo(nodo1.getProb()+nodo2.getProb(),0,nodo1,nodo2,-1);
 			nuevo.incrementarCantRamas();
-			noditos.removeElementAt(noditos.size()-1);
-			noditos.removeElementAt(noditos.size()-1);
-			noditos.addElement(nuevo);
-			CrearArbol(noditos);
-			System.out.println("NO LLEGUESSSSSSSSSS POR FAVOR");
-			return null;
+			nodosAux.removeElementAt(nodosAux.size()-1);
+			nodosAux.removeElementAt(nodosAux.size()-1);
+			nodosAux.addElement(nuevo);
+			nodosAux=CrearArbol(nodosAux);
 		}
-		else
-		{
-			return noditos.elementAt(0); //RETORNAMOS LA RAIZ DEL ARBOL
-		}
+		return nodosAux; //RETORNAMOS LA RAIZ DEL ARBOL
+		
 	}
 	
 	public String generarCodificacion (Imagen img) { //probar con static

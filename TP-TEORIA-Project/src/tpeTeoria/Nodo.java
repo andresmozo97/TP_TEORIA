@@ -31,16 +31,16 @@ public class Nodo implements Comparable<Nodo> {
 	public void setCantRamas(int cantRamas) {
 		this.cantRamas = cantRamas;
 	}
-	public Nodo getHijoArio() {
+	public Nodo getHijo1() {
 		return hijo1;
 	}
-	public void setHijoArio(Nodo hijoArio) {
+	public void setHijo1(Nodo hijoArio) {
 		this.hijo1 = hijoArio;
 	}
-	public Nodo getHijo() {
+	public Nodo getHijo2() {
 		return hijo2;
 	}
-	public void setHijo(Nodo hijo) {
+	public void setHijo2(Nodo hijo) {
 		this.hijo2 = hijo;
 	}
 	public String getCodif() {
@@ -71,7 +71,7 @@ public class Nodo implements Comparable<Nodo> {
 
 	@Override
 	public int compareTo(Nodo n) {
-		return (this.prob).compareTo(n.getProb());
+		return -1* (this.prob).compareTo(n.getProb());
 	}
 	
 	
