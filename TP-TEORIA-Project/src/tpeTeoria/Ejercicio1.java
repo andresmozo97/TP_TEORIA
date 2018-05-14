@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
@@ -26,16 +27,22 @@ public class Ejercicio1 {
 		imgs.add(e.abrirImagen("imagenes\\Will_3.bmp"));
 		imgs.add(e.abrirImagen("imagenes\\Will_4.bmp"));
 		imgs.add(e.abrirImagen("imagenes\\Will_5.bmp"));
+		
 		imgs.add(e.abrirImagen("imagenes\\Will_6.bmp"));
 		imgs.add(e.abrirImagen("imagenes\\Will_7.bmp"));
+		
 		
 		List<Imagen> l= e.OrdenarImagenes(original,imgs);
 		e.GenerarHistogramas(l);
 		e.GenerarTxtDistribuciones(l.get(0));
 		e.GenerarTxtDistribuciones(l.get(l.size()-1));
 		e.GenerarTxtDistribuciones(original);
+		
 		Huffman h = new Huffman();
-		h.setHash(original);
+		String cod = h.generarArchivoComprimido(original);
+
+		Decodificador d = new Decodificador();
+		d.decodificar("Will Original", cod);
 	}
 	
 	public Imagen abrirImagen(String nombreArchivo)
@@ -78,8 +85,9 @@ public class Ejercicio1 {
 	public void GenerarTxtDistribuciones(Imagen img) {
 		try {
 			File archivo = new File("distribucion_de_"+img.getNombre() + ".txt");
-			FileWriter escribir = new FileWriter(archivo, true);			
+			FileWriter escribir = new FileWriter(archivo, false);			
 			String s="La distribucion de la foto "+img.getNombre()+" es: ";
+			
 			s =s+ System.getProperty("line.separator") + img.getStringDistr();
 			//System.out.println(s); //BORRAR DSP
 			escribir.write(s);
@@ -90,6 +98,13 @@ public class Ejercicio1 {
 		}
 	}
 	
+	public Double [] copiarFrec(Double [] v) {
+		Double [] salida = new Double [v.length];
+		for (int i= 0; i<v.length; i++) {
+			salida[i] = v[i];
+		}
+		return salida;
+	}
 	
 	
 	public Double CalcularFactorCorrelacionYDistribuciones(Imagen original, Imagen imagenComp)
@@ -123,6 +138,11 @@ public class Ejercicio1 {
 				B2=B2+rgbImg*rgbImg;
 			}
 		}
+		Double []frecA = this.copiarFrec (distrA);
+		Double []frecB = this.copiarFrec (distrB);
+
+		original.setFrecuencias(frecA);
+		imagenComp.setFrecuencias(frecB);
 		
 		for (int i=0;i<256;i++)
 		{
@@ -143,12 +163,12 @@ public class Ejercicio1 {
 		
 		//Seteamos los valores calculados de la media y el desvio a cada una de las imgs
 		original.setDesvio(desvioA);
-		original.setDistr(distrA);
+		original.setProbabilidades(distrA);
 		
 		original.setMedia(mediaA);
 		imagenComp.setDesvio(desvioB);
 		imagenComp.setMedia(mediaB);
-		imagenComp.setDistr(distrB);
+		imagenComp.setProbabilidades(distrB);
 
 		return factorCorrelacion;
 	}

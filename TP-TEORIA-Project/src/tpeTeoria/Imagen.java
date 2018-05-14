@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -27,8 +29,9 @@ public class Imagen implements Comparable<Imagen>{
 	private Double fc;
 	private Double desvio;
 	private Double media;
-
-	private Double [] distr;
+	private Double [] frecuencias;
+	private Double [] probabilidades;
+	private String nombre;
 	
 	public Imagen() {
 	}
@@ -52,14 +55,22 @@ public class Imagen implements Comparable<Imagen>{
 		this.img = img;
 	}
 	
-	public Double[] getDistr() {
-		return distr;
+	public Double[] getProbabilidades() {
+		return probabilidades;
 	}
 
-	public void setDistr(Double[] distr) {
-		this.distr = distr;
+	public void setProbabilidades(Double[] distr) {
+		this.probabilidades = distr;
 	}
 
+
+	public Double[] getFrecuencias() {
+		return frecuencias;
+	}
+
+	public void setFrecuencias(Double[] frecuencias) {
+		this.frecuencias = frecuencias;
+	}
 
 	public double getFc() {
 		return fc;
@@ -96,9 +107,6 @@ public class Imagen implements Comparable<Imagen>{
 		this.nombre = nombre;
 	}
 
-	private String nombre;
-
-
 	@Override
 	public int compareTo(Imagen i) {
 		return (this.fc).compareTo(i.getFc());
@@ -119,9 +127,9 @@ public class Imagen implements Comparable<Imagen>{
 	public String getStringDistr()
 	{
 		String out="";
-		for (int i=0;i<distr.length;i++)
+		for (int i=0;i<probabilidades.length;i++)
 		{
-			out=out+i+": "+distr[i].toString()+System.getProperty("line.separator");
+			out=out+i+": "+probabilidades[i].toString()+System.getProperty("line.separator");
 		}
 		return out;
 	}
@@ -140,6 +148,24 @@ public class Imagen implements Comparable<Imagen>{
 		Histograma histo = new Histograma("Histograma "+this.nombre,v);
 	}
 	
+	public String getStringFrecuencias () {
+		String salida = "";
+		for (int i = 0 ; i<frecuencias.length; i++) {
+			if (frecuencias[i]!=0.0) {
+				salida= salida+ i+" "+frecuencias[i]+";";
+			}
+		}
+		return salida;
+	}
 	
+	public void generarBmp() {
+		try {
+			ImageIO.write(img, "BMP", new File("archivos//decodificacion_de_"+this.nombre+".bmp"));
+			System.out.println("se guardo el archivo decodificado");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

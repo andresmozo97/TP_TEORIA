@@ -74,5 +74,8 @@ public class Nodo implements Comparable<Nodo> {
 		return -1* (this.prob).compareTo(n.getProb());
 	}
 	
+	public boolean esHoja() {
+		return ((hijo1==null) && (hijo2==null));
+	}
 	
 }
